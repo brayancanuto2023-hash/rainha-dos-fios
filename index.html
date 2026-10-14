@@ -366,4 +366,102 @@
         }
     </script>
 </body>
+<!-- SEÇÃO DE AGENDAMENTO RÁPIDO INTERATIVO -->
+<section class="py-10 bg-[#111111] text-white">
+  <div class="max-w-2xl mx-auto px-4">
+    <div class="bg-[#161616] border border-neutral-800 rounded-2xl p-6 sm:p-8 shadow-2xl">
+      <h2 class="text-2xl sm:text-3xl font-bold text-center text-[#D4AF37] mb-2">Agendamento Rápido</h2>
+      <p class="text-sm text-neutral-400 text-center mb-6">Escolha a profissional e confirme o seu horário diretamente pelo WhatsApp!</p>
+
+      <form id="formAgendamento" class="space-y-4">
+        <!-- Nome do Cliente -->
+        <div>
+          <label class="block text-xs font-semibold uppercase text-neutral-300 mb-1">Seu Nome</label>
+          <input type="text" id="nomeCliente" placeholder="Digite seu nome completo" required class="w-full bg-neutral-900 border border-neutral-800 rounded-lg p-3 text-white focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <!-- Seleção de Profissional -->
+        <div>
+          <label class="block text-xs font-semibold uppercase text-neutral-300 mb-1">Profissional</label>
+          <select id="profissionalSelect" required class="w-full bg-neutral-900 border border-neutral-800 rounded-lg p-3 text-white focus:outline-none focus:border-[#D4AF37]">
+            <option value="">Selecione quem vai te atender...</option>
+            <option value="Kelly">Kelly</option>
+            <option value="Nathalia">Nathália</option>
+            <option value="Ana Luiza">Ana Luiza</option>
+            <option value="Karol">Karol</option>
+            <option value="Yasmim">Yasmim</option>
+            <option value="Margareth">Margareth</option>
+            <option value="Thalita">Thalita</option>
+          </select>
+        </div>
+
+        <!-- Serviço -->
+        <div>
+          <label class="block text-xs font-semibold uppercase text-neutral-300 mb-1">Serviço / Especialidade</label>
+          <input type="text" id="servicoDesejado" placeholder="Ex: Cabelo, Trança, Lash, Sobrancelha..." required class="w-full bg-neutral-900 border border-neutral-800 rounded-lg p-3 text-white focus:outline-none focus:border-[#D4AF37]">
+        </div>
+
+        <!-- Data e Horário -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase text-neutral-300 mb-1">Data</label>
+            <input type="date" id="dataAgendamento" required class="w-full bg-neutral-900 border border-neutral-800 rounded-lg p-3 text-white focus:outline-none focus:border-[#D4AF37]">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-neutral-300 mb-1">Horário</label>
+            <input type="time" id="horarioAgendamento" required class="w-full bg-neutral-900 border border-neutral-800 rounded-lg p-3 text-white focus:outline-none focus:border-[#D4AF37]">
+          </div>
+        </div>
+
+        <!-- Botão de Envio -->
+        <button type="submit" class="w-full bg-[#D4AF37] hover:bg-[#b8952d] text-black font-bold py-3 px-6 rounded-lg transition duration-200 mt-4 flex items-center justify-center gap-2">
+          <span>Confirmar Agendamento no WhatsApp</span>
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.031 0c-6.627 0-12 5.373-12 12 0 2.159.572 4.26 1.657 6.105l-1.688 6.167 6.306-1.653c1.8.981 3.834 1.498 5.925 1.498 6.627 0 12-5.373 12-12s-5.373-12-12-12zm0 22c-1.834 0-3.619-.482-5.187-1.396l-.371-.217-3.855 1.01 1.028-3.756-.239-.381c-1.002-1.597-1.53-3.447-1.53-5.341 0-5.514 4.486-10 10-10s10 4.486 10 10-4.486 10-10 10z"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- SCRIPT DE REDIRECIONAMENTO INTELIGENTE -->
+<script>
+  const contatosProfissionais = {
+    "Kelly": "5522992876230",
+    "Nathalia": "5522997129938",
+    "Ana Luiza": "5522997897165",
+    "Karol": "5522998324187",
+    "Yasmim": "5522997748971",
+    "Margareth": "5541999094543",
+    "Thalita": "5522992773031"
+  };
+
+  document.getElementById('formAgendamento').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const nome = document.getElementById('nomeCliente').value;
+    const profissional = document.getElementById('profissionalSelect').value;
+    const servico = document.getElementById('servicoDesejado').value;
+    const data = document.getElementById('dataAgendamento').value;
+    const horario = document.getElementById('horarioAgendamento').value;
+
+    const numeroWhatsApp = contatosProfissionais[profissional];
+
+    if (!numeroWhatsApp) {
+      alert('Por favor, selecione uma profissional válida.');
+      return;
+    }
+
+    const dataFormatada = data.split('-').reverse().join('/');
+
+    const mensagem = `Olá, ${profissional}! Gostaria de agendar um horário com você pelo site *RAINHA DOS FIOS*:%0A%0A` +
+      `👤 *Cliente:* ${nome}%0A` +
+      `💇‍♀️ *Serviço:* ${servico}%0A` +
+      `📅 *Data:* ${dataFormatada}%0A` +
+      `⏰ *Horário:* ${horario}%0A%0A` +
+      `Pode confirmar a disponibilidade deste horário?`;
+
+    const url = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensagem}`;
+    window.open(url, '_blank');
+  });
+</script>            
 </html>
