@@ -289,16 +289,25 @@
         // Simulação de Agendamento
         function handleBooking(event) {
             event.preventDefault();
-            const name = document.getElementById('clientName').value;
-            const successBox = document.getElementById('successMessage');
-            
-            successBox.innerHTML = `✨ Parabéns, <b>${name}</b>! Seu agendamento foi pré-confirmado com sucesso. Entraremos em contato pelo WhatsApp para validar os detalhes.`;
-            successBox.classList.remove('hidden');
-            
-            document.getElementById('bookingForm').reset();
-            setTimeout(() => {
-                successBox.classList.add('hidden');
-            }, 8000);
+    
+    // Capturar os dados preenchidos no formulário
+    const name = document.getElementById('clientName').value;
+    const phone = document.getElementById('clientPhone').value;
+    const service = document.getElementById('serviceCategory').value;
+    const date = document.getElementById('bookingDate').value;
+    const time = document.getElementById('bookingTime').value;
+
+    // Número do salão Rainha dos Fios
+    const whatsappNumber = "5522997024728";
+
+    // Montar a mensagem automática formatada
+    const message = `Olá! Gostaria de agendar um horário no salão Rainha dos Fios.\n\n*Nome:* ${name}\n*Telefone:* ${phone}\n*Serviço:* ${service}\n*Data:* ${date}\n*Horário:* ${time}`;
+
+    // Codificar a mensagem para o formato de link do WhatsApp
+    const encodedMessage = encodeURIComponent(message);
+
+    // Abrir o WhatsApp diretamente com os dados
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
         }
     </script>
 </body>
