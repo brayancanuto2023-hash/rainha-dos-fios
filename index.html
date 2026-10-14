@@ -285,7 +285,7 @@
 
       <!-- 5. Yasmim -->
       <div class="bg-[#161616] rounded-xl overflow-hidden border border-neutral-800 text-center p-3 shadow-lg">
-        <img src="https://raw.githubusercontent.com/brayancanuto2023-hash/rainha-dos-fios/main/yasmim.jpeg.jpeg" alt="Yasmim" class="w-full h-44 sm:h-52 object-cover object-cover rounded-lg mb-3">
+        <img src="https://raw.githubusercontent.com/brayancanuto2023-hash/rainha-dos-fios/main/yasmim.jpeg" alt="Yasmim" class="w-full h-44 sm:h-52 object-cover object-cover rounded-lg mb-3">
         <h3 class="text-base sm:text-lg font-bold text-white">Yasmim</h3>
         <p class="text-xs sm:text-sm text-[#D4AF37] font-medium">Lash Designer</p>
       </div>
@@ -340,3 +340,30 @@
         function toggleDarkMode() {
             document.documentElement.classList.toggle('dark');
         }
+
+        // Simulação de Agendamento
+        function handleBooking(event) {
+            event.preventDefault();
+    
+    // Capturar os dados preenchidos no formulário
+    const name = document.getElementById('clientName').value;
+    const phone = document.getElementById('clientPhone').value;
+    const service = document.getElementById('serviceCategory').value;
+    const date = document.getElementById('bookingDate').value;
+    const time = document.getElementById('bookingTime').value;
+
+    // Número do salão Rainha dos Fios
+    const whatsappNumber = "5522997024728";
+
+    // Montar a mensagem automática formatada
+    const message = `Olá! Gostaria de agendar um horário no salão Rainha dos Fios.\n\n*Nome:* ${name}\n*Telefone:* ${phone}\n*Serviço:* ${service}\n*Data:* ${date}\n*Horário:* ${time}`;
+
+    // Codificar a mensagem para o formato de link do WhatsApp
+    const encodedMessage = encodeURIComponent(message);
+
+    // Abrir o WhatsApp diretamente com os dados
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        }
+    </script>
+</body>
+</html>
