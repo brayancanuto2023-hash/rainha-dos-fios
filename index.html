@@ -707,10 +707,120 @@ function entrarNoPainel() {
     atualizar();
     setInterval(atualizar, 1000);
   }
-
-  // Função para Emitir Relatório
+// Função para Gerar Relatório Limpo e Profissional
   function gerarRelatorio() {
-    window.print();
+    const dataAtual = new Date().toLocaleDateString('pt-BR');
+    const horaAtual = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+    // Cálculo dos totais
+    let faturamento = 0;
+    let despesas = 0;
+    let comissoes = 0;
+
+    lancamentos.forEach(item => {
+      const val = parseFloat(item.valor) || 0;
+      if (item.tipo === 'receita') {
+        faturamento += val;
+      } else if (item.tipo === 'despesa') {
+        despesas += val;
+      }
+    });
+
+    const lucro = faturamento - despesas;
+
+    // Gerar tabela de lançamentos
+    let linhasTabela = '';
+    if (lancamentos.length === 0) {
+      linhasTabela = `<tr><td colspan="4" style="text-align: center; padding: 10px;">Nenhum lançamento registrado.</td></tr>`;
+    } else {
+      lancamentos.forEach(item => {
+        const dataFormatada = item.data ? new Date(item.data).toLocaleDateString('pt-BR') : '-';
+        const tipoTexto = item.tipo === 'receita' ? 'Entrada' : 'Saída';
+        const corTipo = item.tipo === 'receita' ? '#16a34a' : '#dc2626';
+        
+        linhasTabela += `
+          <tr style="border-bottom: 1px solid #e2e8f0;">
+            <td style="padding: 8px;">${dataFormatada}</td>
+            <td style="padding: 8px;">${item.descricao || '-'}</td>
+            <td style="padding: 8px; color: ${corTipo}; font-weight: bold;">${tipoTexto}</td>
+            <td style="padding: 8px; text-align: right;">R$ ${parseFloat(item.valor || 0).toFixed(2)}</td>
+          </tr>
+        `;
+      });
+    }
+
+    // Estrutura HTML do Relatório Limpo
+    const janelaImpressao = window.open('', '_blank');
+    janelaImpressao.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Relatório Financeiro - Rainha dos Fios</title>
+        <style>
+          body { font-family: Arial, sans-serif; color: #1e293b; padding: 20px; margin: 0; }
+          .header { text-align: center; border-bottom: 2px solid #0f172a; padding-bottom: 12px; margin-bottom: 20px; }
+          .header h1 { margin: 0; font-size: 22px; color: #0f172a; }
+          .header p { margin: 4px 0 0; font-size: 13px; color: #64748b; }
+          .resumo-box { display: flex; justify-content: space-between; margin-bottom: 25px; gap: 10px; }
+          .card { flex: 1; border: 1px solid #cbd5e1; padding: 12px; border-radius: 8px; background-color: #f8fafc; text-align: center; }
+          .card span { font-size: 11px; text-transform: uppercase; color: #64748b; font-weight: bold; display: block; }
+          .card strong { font-size: 16px; display: block; margin-top: 4px; }
+          table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+          th { background-color: #0f172a; color: white; text-align: left; padding: 8px; font-weight: 600; }
+          .footer { margin-top: 30px; text-align: center; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 10px; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1>Rainha dos Fios — Espaço de Beleza & Estética</h1>
+          <p>Relatório Financeiro Geral | Emissão: ${dataAtual} às ${horaAtual}</p>
+        </div>
+
+        <div class="resumo-box">
+          <div class="card">
+            <span>Faturamento Bruto</span>
+            <strong style="color: #16a34a;">R$ ${faturamento.toFixed(2)}</strong>
+          </div>
+          <div class="card">
+            <span>Total Despesas</span>
+            <strong style="color: #dc2626;">R$ ${despesas.toFixed(2)}</strong>
+          </div>
+          <div class="card">
+            <span>Lucro Líquido</span>
+            <strong style="color: #0284c7;">R$ ${lucro.toFixed(2)}</strong>
+          </div>
+        </div>
+
+        <h3 style="font-size: 15px; margin-bottom: 8px; color: #0f172a;">Detalhamento dos Lançamentos</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Descrição / Cliente</th>
+              <th>Tipo</th>
+              <th style="text-align: right;">Valor (R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${linhasTabela}
+          </tbody>
+        </table>
+
+        <div class="footer">
+          Documento gerado automaticamente pelo Sistema de Gestão - Rainha dos Fios
+        </div>
+
+        <script>
+          window.onload = function() {
+            window.print();
+            setTimeout(function() { window.close(); }, 500);
+          };
+        </script>
+      </body>
+      </html>
+    `);
+    janelaImpressao.document.close();
+  }
   }
 </script>
 </body>
