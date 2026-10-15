@@ -449,32 +449,6 @@
       Sair do Painel
     </button>
   </div>
-    <!-- Filtro Inteligente -->
-  <div class="bg-slate-800 p-4 rounded-xl mb-6 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-    <div>
-      <label class="block text-xs text-slate-400 mb-1">Pesquisar</label>
-      <input type="text" id="filtroTexto" oninput="filtrarLancamentos()" placeholder="Ex: Venda, Aluguel..." class="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg text-sm">
-    </div>
-    
-    <div>
-      <label class="block text-xs text-slate-400 mb-1">Tipo</label>
-      <select id="filtroTipo" onchange="filtrarLancamentos()" class="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg text-sm">
-        <option value="todos">Todos</option>
-        <option value="receita">Apenas Receitas</option>
-        <option value="despesa">Apenas Despesas</option>
-      </select>
-    </div>
-
-    <div>
-      <label class="block text-xs text-slate-400 mb-1">Data Inicial</label>
-      <input type="date" id="filtroDataInicio" onchange="filtrarLancamentos()" class="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg text-sm">
-    </div>
-
-    <div>
-      <label class="block text-xs text-slate-400 mb-1">Data Final</label>
-      <input type="date" id="filtroDataFim" onchange="filtrarLancamentos()" class="w-full px-3 py-2 bg-slate-700 text-white border border-slate-600 rounded-lg text-sm">
-    </div>
-  </div>
 </div>
 
     <!-- Cards de Resumo Financeiro -->
@@ -582,28 +556,6 @@
 
   let usuarioLogado = "";
   let lancamentos = [];
-    // Função de Filtro Inteligente
-  function filtrarLancamentos() {
-    const texto = document.getElementById('filtroTexto').value.toLowerCase();
-    const tipo = document.getElementById('filtroTipo').value;
-    const dataInicio = document.getElementById('filtroDataInicio').value;
-    const dataFim = document.getElementById('filtroDataFim').value;
-
-    const filtrados = lancamentos.filter(item => {
-      const bateTexto = item.descricao ? item.descricao.toLowerCase().includes(texto) : true;
-      const bateTipo = (tipo === 'todos') || (item.tipo === tipo);
-      let bateData = true;
-
-      if (item.data) {
-        if (dataInicio && item.data < dataInicio) bateData = false;
-        if (dataFim && item.data > dataFim) bateData = false;
-      }
-
-      return bateTexto && bateTipo && bateData;
-    });
-
-    renderizarTabela(filtrados);
-  }
 
   function abrirModalSenha() {
     document.getElementById('modalSenha').classList.remove('hidden');
