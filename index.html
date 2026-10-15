@@ -543,8 +543,11 @@
 
 <!-- Script de Gestão Financeira -->
 <script>
-  const SENHA_GERENCIA = "1234"; // Pode alterar para a senha que preferir
-  let lancamentos = [];
+  // Defina aqui as palavras-passe de cada perfil
+  const SENHA_ADMIN = "1234";       // Palavra-passe do Administrador Geral (Você)
+  const SENHA_GERENTE = "cecilia123"; // Palavra-passe da Gerente Geral (Cecília)
+
+  let usuarioLogado = "";
 
   function abrirModalSenha() {
     document.getElementById('modalSenha').classList.remove('hidden');
@@ -559,14 +562,24 @@
   }
 
   function validarSenha() {
+    const perfil = document.getElementById('selectPerfil').value;
     const senha = document.getElementById('inputSenha').value;
-    if (senha === SENHA_GERENCIA) {
-      fecharModalSenha();
-      document.getElementById('painelFinanceiro').classList.remove('hidden');
-      atualizarPainel();
+
+    if (perfil === 'admin' && senha === SENHA_ADMIN) {
+      usuarioLogado = "Administrador Geral";
+      entrarNoPainel();
+    } else if (perfil === 'gerente' && senha === SENHA_GERENTE) {
+      usuarioLogado = "Gerente Geral (Cecília)";
+      entrarNoPainel();
     } else {
-      alert('Senha incorreta!');
+      alert('Palavra-passe incorreta para o perfil selecionado!');
     }
+  }
+
+  function entrarNoPainel() {
+    fecharModalSenha();
+    document.getElementById('painelFinanceiro').classList.remove('hidden');
+    atualizarPainel();
   }
 
   function fecharPainel() {
