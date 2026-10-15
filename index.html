@@ -402,5 +402,258 @@
     window.open(url, '_blank');
   }
     </script>
+            <!-- Botão Discreto no Rodapé para Acesso à Gerência -->
+<footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-200 dark:border-slate-800">
+  <p>© RAINHA DOS FIOS — Todos os direitos reservados.</p>
+  <button onclick="abrirModalSenha()" class="mt-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 underline cursor-pointer">
+    🔒 Acesso Restrito (Painel Financeiro)
+  </button>
+</footer>
+
+<!-- Modal de Senha -->
+<div id="modalSenha" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
+  <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
+    <h3 class="text-xl font-bold mb-4 text-slate-800 dark:text-white">Área da Gerência</h3>
+    <p class="text-sm text-slate-500 mb-4">Insira a senha de administrador do sistema:</p>
+    <input type="password" id="inputSenha" placeholder="Digite a senha..." class="w-full px-4 py-2 border rounded-xl mb-4 bg-slate-50 dark:bg-slate-700 dark:text-white border-slate-300 dark:border-slate-600 outline-none">
+    <div class="flex gap-2 justify-end">
+      <button onclick="fecharModalSenha()" class="px-4 py-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl">Cancelar</button>
+      <button onclick="validarSenha()" class="px-4 py-2 bg-brand-600 text-white font-medium rounded-xl hover:bg-brand-700">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Painel Financeiro Completo -->
+<section id="painelFinanceiro" class="hidden bg-slate-900 text-white min-h-screen p-6 fixed inset-0 z-50 overflow-y-auto">
+  <div class="max-w-6xl mx-auto space-y-8">
+    
+    <!-- Cabeçalho do Painel -->
+    <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+      <div>
+        <h2 class="text-2xl font-bold text-amber-400">📊 Painel Financeiro — Rainha dos Fios</h2>
+        <p class="text-xs text-slate-400">Controlo de caixa, despesas, stock e comissões da equipa</p>
+      </div>
+      <button onclick="fecharPainel()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-sm font-medium transition-colors">Sair do Painel</button>
+    </div>
+
+    <!-- Cards de Resumo Financeiro -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <span class="text-xs text-slate-400 uppercase font-semibold">Faturamento Bruto</span>
+        <p id="cardBruto" class="text-2xl font-bold text-emerald-400 mt-1">R$ 0,00</p>
+      </div>
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <span class="text-xs text-slate-400 uppercase font-semibold">Total Despesas / Stock</span>
+        <p id="cardDespesas" class="text-2xl font-bold text-rose-400 mt-1">R$ 0,00</p>
+      </div>
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <span class="text-xs text-slate-400 uppercase font-semibold">Comissões a Pagar</span>
+        <p id="cardComissoes" class="text-2xl font-bold text-amber-400 mt-1">R$ 0,00</p>
+      </div>
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+        <span class="text-xs text-slate-400 uppercase font-semibold">Lucro Líquido do Salão</span>
+        <p id="cardLucro" class="text-2xl font-bold text-cyan-400 mt-1">R$ 0,00</p>
+      </div>
+    </div>
+
+    <!-- Formulários de Lançamento -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      
+      <!-- Lançamento de Receita / Atendimento -->
+      <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+        <h3 class="text-lg font-bold text-emerald-400 mb-4">➕ Registrar Atendimento (Entrada)</h3>
+        <form onsubmit="adicionarEntrada(event)" class="space-y-3">
+          <input type="text" id="entCliente" placeholder="Nome da Cliente" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white">
+          <div class="grid grid-cols-2 gap-2">
+            <select id="entProfissional" required class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white">
+              <option value="">Profissional...</option>
+              <option value="Margareth">Margareth (Cabelos)</option>
+              <option value="Nathalia">Nathalia (Manicure)</option>
+              <option value="Karol">Karol (Sobrancelhas)</option>
+              <option value="Ana Luiza">Ana Luiza (Tranças)</option>
+              <option value="Yasmin">Yasmin (Lash Designer)</option>
+              <option value="Thalita">Thalita (Tratamento)</option>
+              <option value="Kelly">Kelly (Massagista)</option>
+            </select>
+            <input type="number" step="0.01" id="entValor" placeholder="Valor (R$)" required class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white">
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <select id="entPagamento" required class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white">
+              <option value="Pix">Pix</option>
+              <option value="Cartão de Crédito">Cartão de Crédito</option>
+              <option value="Cartão de Débito">Cartão de Débito</option>
+              <option value="Dinheiro">Dinheiro</option>
+            </select>
+            <input type="number" id="entComissaoPct" placeholder="% Comissão (Ex: 50)" value="50" class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white">
+          </div>
+          <button type="submit" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 rounded-lg font-semibold text-sm transition-colors cursor-pointer">Salvar Entrada</button>
+        </form>
+      </div>
+
+      <!-- Lançamento de Despesa / Stock -->
+      <div class="bg-slate-800 p-6 rounded-xl border border-slate-700">
+        <h3 class="text-lg font-bold text-rose-400 mb-4">➖ Registrar Despesa / Stock (Saída)</h3>
+        <form onsubmit="adicionarSaida(event)" class="space-y-3">
+          <input type="text" id="saiDescricao" placeholder="Descrição (Ex: Compra de Produtos, Aluguel)" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white">
+          <div class="grid grid-cols-2 gap-2">
+            <input type="number" step="0.01" id="saiValor" placeholder="Valor (R$)" required class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white">
+            <select id="saiCategoria" required class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white">
+              <option value="Produtos/Stock">Produtos / Stock</option>
+              <option value="Contas Fixas">Contas Fixas</option>
+              <option value="Outros">Outros</option>
+            </select>
+          </div>
+          <button type="submit" class="w-full py-2 bg-rose-600 hover:bg-rose-700 rounded-lg font-semibold text-sm transition-colors cursor-pointer">Salvar Despesa</button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Tabela de Histórico de Lançamentos -->
+    <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 overflow-x-auto">
+      <h3 class="text-lg font-bold text-white mb-4">📋 Histórico de Lançamentos</h3>
+      <table class="w-full text-left text-xs">
+        <thead class="bg-slate-900 text-slate-400 uppercase">
+          <tr>
+            <th class="p-3">Tipo</th>
+            <th class="p-3">Descrição / Cliente</th>
+            <th class="p-3">Profissional</th>
+            <th class="p-3">Pagamento</th>
+            <th class="p-3">Valor</th>
+            <th class="p-3">Comissão</th>
+            <th class="p-3">Ação</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaHistorico" class="divide-y divide-slate-700">
+          <!-- Os registos aparecem aqui dinamicamente -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<!-- Script de Gestão Financeira -->
+<script>
+  const SENHA_GERENCIA = "1234"; // Pode alterar para a senha que preferir
+  let lancamentos = [];
+
+  function abrirModalSenha() {
+    document.getElementById('modalSenha').classList.remove('hidden');
+    document.getElementById('modalSenha').classList.add('flex');
+    document.getElementById('inputSenha').focus();
+  }
+
+  function fecharModalSenha() {
+    document.getElementById('modalSenha').classList.add('hidden');
+    document.getElementById('modalSenha').classList.remove('flex');
+    document.getElementById('inputSenha').value = '';
+  }
+
+  function validarSenha() {
+    const senha = document.getElementById('inputSenha').value;
+    if (senha === SENHA_GERENCIA) {
+      fecharModalSenha();
+      document.getElementById('painelFinanceiro').classList.remove('hidden');
+      atualizarPainel();
+    } else {
+      alert('Senha incorreta!');
+    }
+  }
+
+  function fecharPainel() {
+    document.getElementById('painelFinanceiro').classList.add('hidden');
+  }
+
+  function adicionarEntrada(e) {
+    e.preventDefault();
+    const cliente = document.getElementById('entCliente').value;
+    const profissional = document.getElementById('entProfissional').value;
+    const valor = parseFloat(document.getElementById('entValor').value);
+    const pagamento = document.getElementById('entPagamento').value;
+    const comissaoPct = parseFloat(document.getElementById('entComissaoPct').value) || 0;
+    
+    const valorComissao = (valor * comissaoPct) / 100;
+
+    lancamentos.push({
+      tipo: 'ENTRADA',
+      descricao: `Atendimento: ${cliente}`,
+      profissional,
+      pagamento,
+      valor,
+      comissao: valorComissao
+    });
+
+    e.target.reset();
+    document.getElementById('entComissaoPct').value = "50";
+    atualizarPainel();
+  }
+
+  function adicionarSaida(e) {
+    e.preventDefault();
+    const descricao = document.getElementById('saiDescricao').value;
+    const valor = parseFloat(document.getElementById('saiValor').value);
+    const categoria = document.getElementById('saiCategoria').value;
+
+    lancamentos.push({
+      tipo: 'SAIDA',
+      descricao: `[${categoria}] ${descricao}`,
+      profissional: '-',
+      pagamento: '-',
+      valor,
+      comissao: 0
+    });
+
+    e.target.reset();
+    atualizarPainel();
+  }
+
+  function removerLancamento(index) {
+    lancamentos.splice(index, 1);
+    atualizarPainel();
+  }
+
+  function atualizarPainel() {
+    let totalBruto = 0;
+    let totalDespesas = 0;
+    let totalComissoes = 0;
+
+    const tbody = document.getElementById('tabelaHistorico');
+    tbody.innerHTML = '';
+
+    if (lancamentos.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-500">Nenhum lançamento registado hoje.</td></tr>`;
+    }
+
+    lancamentos.forEach((item, index) => {
+      if (item.tipo === 'ENTRADA') {
+        totalBruto += item.valor;
+        totalComissoes += item.comissao;
+      } else {
+        totalDespesas += item.valor;
+      }
+
+      const tr = document.createElement('tr');
+      tr.className = "hover:bg-slate-750";
+      tr.innerHTML = `
+        <td class="p-3 font-semibold ${item.tipo === 'ENTRADA' ? 'text-emerald-400' : 'text-rose-400'}">${item.tipo}</td>
+        <td class="p-3">${item.descricao}</td>
+        <td class="p-3">${item.profissional}</td>
+        <td class="p-3">${item.pagamento}</td>
+        <td class="p-3 font-bold">R$ ${item.valor.toFixed(2)}</td>
+        <td class="p-3 text-amber-400">R$ ${item.comissao.toFixed(2)}</td>
+        <td class="p-3"><button onclick="removerLancamento(${index})" class="text-rose-400 hover:text-rose-200 cursor-pointer">❌</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    const lucroLiquido = totalBruto - totalDespesas - totalComissoes;
+
+    document.getElementById('cardBruto').innerText = `R$ ${totalBruto.toFixed(2)}`;
+    document.getElementById('cardDespesas').innerText = `R$ ${totalDespesas.toFixed(2)}`;
+    document.getElementById('cardComissoes').innerText = `R$ ${totalComissoes.toFixed(2)}`;
+    document.getElementById('cardLucro').innerText = `R$ ${lucroLiquido.toFixed(2)}`;
+  }
+</script>
 </body>
 </html>
