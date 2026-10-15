@@ -588,6 +588,11 @@
 
   let usuarioLogado = "";
   let lancamentos = [];
+    // Função para Abrir/Fechar o Painel de Filtro
+  function toggleFiltro() {
+    const painel = document.getElementById('painelFiltro');
+    painel.classList.toggle('hidden');
+  }
     // Função de Filtro Inteligente
   function filtrarLancamentos() {
     const texto = document.getElementById('filtroTexto').value.toLowerCase();
