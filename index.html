@@ -357,28 +357,46 @@
         }
 
         // Simulação de Agendamento
-        function handleBooking(event) {
-            event.preventDefault();
-    
-    // Capturar os dados preenchidos no formulário
-    const name = document.getElementById('clientName').value;
-    const phone = document.getElementById('clientPhone').value;
-    const service = document.getElementById('serviceCategory').value;
-    const date = document.getElementById('bookingDate').value;
-    const time = document.getElementById('bookingTime').value;
+        const contatosProfissionais = {
+    "Kelly": "5522992876230",
+    "Nathalia": "5522997129938",
+    "Ana Luiza": "5522997897165",
+    "Karol": "5522998324187",
+    "Yasmim": "5522997748971",
+    "Margareth": "5541999094543",
+    "Thalita": "5522992773031"
+  };
 
-    // Número do salão Rainha dos Fios
-    const whatsappNumber = "5522997024728";
+  function handleBooking(event) {
+    event.preventDefault();
 
-    // Montar a mensagem automática formatada
-    const message = `Olá! Gostaria de agendar um horário no salão Rainha dos Fios.\n\n*Nome:* ${name}\n*Telefone:* ${phone}\n*Serviço:* ${service}\n*Data:* ${date}\n*Horário:* ${time}`;
+    const nome = document.getElementById('clientName').value;
+    const telefone = document.getElementById('clientPhone').value;
+    const servico = document.getElementById('serviceCategory').value;
+    const profissional = document.getElementById('professionalSelect').value;
+    const data = document.getElementById('bookingDate').value;
+    const horario = document.getElementById('bookingTime').value;
 
-    // Codificar a mensagem para o formato de link do WhatsApp
-    const encodedMessage = encodeURIComponent(message);
+    const numeroWhatsApp = contatosProfissionais[profissional];
 
-    // Abrir o WhatsApp diretamente com os dados
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-        }
+    if (!numeroWhatsApp) {
+      alert('Por favor, selecione uma profissional válida.');
+      return;
+    }
+
+    const dataFormatada = data ? data.split('-').reverse().join('/') : '';
+
+    const mensagem = `Olá, ${profissional}! Gostaria de agendar um horário com você pelo site *RAINHA DOS FIOS*:%0A%0A` +
+      `👤 *Cliente:* ${nome}%0A` +
+      `📱 *Telefone:* ${telefone}%0A` +
+      `💇‍♀️ *Serviço:* ${servico}%0A` +
+      `📅 *Data:* ${dataFormatada}%0A` +
+      `⏰ *Horário:* ${horario}%0A%0A` +
+      `Pode confirmar a disponibilidade deste horário?`;
+
+    const url = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensagem}`;
+    window.open(url, '_blank');
+  }
     </script>
 </body>
 </html>
