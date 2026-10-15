@@ -373,20 +373,22 @@
     const nome = document.getElementById('clientName').value;
     const telefone = document.getElementById('clientPhone').value;
     const servico = document.getElementById('serviceCategory').value;
-    const profissional = document.getElementById('professionalSelect').value;
     const data = document.getElementById('bookingDate').value;
     const horario = document.getElementById('bookingTime').value;
 
-    const numeroWhatsApp = contatosProfissionais[profissional];
+    const profissionalInfo = contatosPorEspecialidade[servico];
 
-    if (!numeroWhatsApp) {
-      alert('Por favor, selecione uma profissional válida.');
+    if (!profissionalInfo) {
+      alert('Por favor, selecione uma especialidade válida.');
       return;
     }
 
+    const numeroWhatsApp = profissionalInfo.numero;
+    const nomeProfissional = profissionalInfo.nome;
+
     const dataFormatada = data ? data.split('-').reverse().join('/') : '';
 
-    const mensagem = `Olá, ${profissional}! Gostaria de agendar um horário com você pelo site *RAINHA DOS FIOS*:%0A%0A` +
+    const mensagem = `Olá, ${nomeProfissional}! Gostaria de agendar um horário de *${servico}* pelo site *RAINHA DOS FIOS*:%0A%0A` +
       `👤 *Cliente:* ${nome}%0A` +
       `📱 *Telefone:* ${telefone}%0A` +
       `💇‍♀️ *Serviço:* ${servico}%0A` +
