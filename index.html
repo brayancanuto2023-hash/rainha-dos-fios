@@ -410,12 +410,20 @@
   </button>
 </footer>
 
-<!-- Modal de Senha -->
+<!-- Modal de Senha Atualizado (Com Perfil) -->
 <div id="modalSenha" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
   <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
-    <h3 class="text-xl font-bold mb-4 text-slate-800 dark:text-white">Área da Gerência</h3>
-    <p class="text-sm text-slate-500 mb-4">Insira a senha de administrador do sistema:</p>
-    <input type="password" id="inputSenha" placeholder="Digite a senha..." class="w-full px-4 py-2 border rounded-xl mb-4 bg-slate-50 dark:bg-slate-700 dark:text-white border-slate-300 dark:border-slate-600 outline-none">
+    <h3 class="text-xl font-bold mb-4 text-slate-800 dark:text-white">Área Restrita — Salão</h3>
+    
+    <label class="block text-xs font-semibold text-slate-500 mb-1">Selecione o Perfil:</label>
+    <select id="selectPerfil" class="w-full px-4 py-2 border rounded-xl mb-4 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-300 dark:border-slate-600 outline-none">
+      <option value="admin">Administrador Geral</option>
+      <option value="gerente">Gerente Geral (Cecília)</option>
+    </select>
+
+    <label class="block text-xs font-semibold text-slate-500 mb-1">Palavra-passe:</label>
+    <input type="password" id="inputSenha" placeholder="Digite a palavra-passe..." class="w-full px-4 py-2 border rounded-xl mb-4 bg-slate-50 dark:bg-slate-700 text-slate-800 dark:text-white border-slate-300 dark:border-slate-600 outline-none">
+    
     <div class="flex gap-2 justify-end">
       <button onclick="fecharModalSenha()" class="px-4 py-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl">Cancelar</button>
       <button onclick="validarSenha()" class="px-4 py-2 bg-brand-600 text-white font-medium rounded-xl hover:bg-brand-700">Entrar</button>
