@@ -367,38 +367,68 @@
       "Lash Designer": { nome: "Yasmim", numero: "5522997748971" },
       "Tratamento Capilar": { nome: "Thalita", numero: "5522992773031" }
   };
+function handleBooking(event) {
+      if (event) event.preventDefault();
+      
+      const nomeInput = document.getElementById('clientName');
+      const telefoneInput = document.getElementById('clientPhone');
+      const servicoInput = document.getElementById('serviceCategory');
+      const dataInput = document.getElementById('bookingDate');
+      const horarioInput = document.getElementById('bookingTime');
 
-  function handleBooking(event) {
-    event.preventDefault();
+      if (!nomeInput || !telefoneInput || !servicoInput || !dataInput || !horarioInput) {
+        alert('Erro de configuração: Um ou mais campos do formulário não foram encontrados.');
+        return false;
+      }
 
-    const nome = document.getElementById('clientName').value;
-    const telefone = document.getElementById('clientPhone').value;
-    const servico = document.getElementById('serviceCategory').value;
-    const data = document.getElementById('bookingDate').value;
-    const horario = document.getElementById('bookingTime').value;
+      const nome = nomeInput.value;
+      const telefone = telefoneInput.value;
+      const servico = servicoInput.value;
+      const data = dataInput.value;
+      const horario = horarioInput.value;
 
-    const profissionalInfo = contatosPorEspecialidade[servico];
+      const profissionalInfo = contatosPorEspecialidade[servico];
 
-    if (!profissionalInfo) {
-      alert('Por favor, selecione uma especialidade válida.');
-      return;
+      if (!servico || !profissionalInfo) {
+        alert('Por favor, selecione uma especialidade válida.');
+        return false;
+      }
+
+      const dataFormatada = data ? data.split('-').reverse().join('/') : '';
+      const nomeProfissional = profissionalInfo.nome;
+      const numeroProfissional = profissionalInfo.numero;
+
+      // Mensagem para a profissional
+      const mensagemProfissional = `*Olá, ${nomeProfissional}!*%0A` +
+                                   `👤 *Cliente:* ${nome}%0A` +
+                                   `📱 *Telefone:* ${telefone}%0A` +
+                                   `✨ *Serviço:* ${servico}%0A` +
+                                   `📅 *Data:* ${dataFormatada}%0A` +
+                                   `⏰ *Horário:* ${horario}%0A` +
+                                   `Pode confirmar a disponibilidade deste horário?`;
+
+      // Número da Gerente Geral (Cecília)
+      const numeroGerente = "5522997024728";
+      const mensagemGerente = `🔔 *NOVO AGENDAMENTO NO SALÃO*%0A%0A` +
+                              `👤 *Cliente:* ${nome}%0A` +
+                              `📱 *Telefone:* ${telefone}%0A` +
+                              `✨ *Serviço:* ${servico}%0A` +
+                              `👩‍🦰 *Profissional:* ${nomeProfissional}%0A` +
+                              `📅 *Data:* ${dataFormatada}%0A` +
+                              `⏰ *Horário:* ${horario}`;
+
+      // Redireciona para a profissional
+      const urlProfissional = `https://api.whatsapp.com/send?phone=${numeroProfissional}&text=${mensagemProfissional}`;
+      window.open(urlProfissional, '_blank');
+
+      // Notifica a gerente
+      setTimeout(() => {
+        const urlGerente = `https://api.whatsapp.com/send?phone=${numeroGerente}&text=${mensagemGerente}`;
+        window.open(urlGerente, '_blank');
+      }, 1000);
+
+      return false;
     }
-
-    const numeroWhatsApp = profissionalInfo.numero;
-    const nomeProfissional = profissionalInfo.nome;
-
-    const dataFormatada = data ? data.split('-').reverse().join('/') : '';
-
-    const mensagem = `Olá, ${nomeProfissional}! Gostaria de agendar um horário de *${servico}* pelo site *RAINHA DOS FIOS*:%0A%0A` +
-      `👤 *Cliente:* ${nome}%0A` +
-      `📱 *Telefone:* ${telefone}%0A` +
-      `💇‍♀️ *Serviço:* ${servico}%0A` +
-      `📅 *Data:* ${dataFormatada}%0A` +
-      `⏰ *Horário:* ${horario}%0A%0A` +
-      `Pode confirmar a disponibilidade deste horário?`;
-
-    const url = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensagem}`;
-    window.open(url, '_blank');
   }
     </script>
             <!-- Botão Discreto no Rodapé para Acesso à Gerência -->
