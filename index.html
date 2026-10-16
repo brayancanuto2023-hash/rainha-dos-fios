@@ -203,6 +203,7 @@
       <select id="serviceCategory" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none transition-all">
         <option value="">Selecione a Especialidade / Área...</option>
         <option value="Cabelos">Cabelos</option>
+        <option value="Cabeleireiro">Cabeleireiro</option>
         <option value="Nails Designer">Nails Designer</option>
         <option value="Nails Designer em Gel">Nails Designer em Gel</option>
         <option value="Massagista">Massagista</option>
@@ -355,14 +356,16 @@
 
         // Simulação de Agendamento
     const contatosPorEspecialidade = {
-    "Cabelos": { nome: "Margareth", numero: "5541999094543" },
-    "Manicure & Pedicure": { nome: "Nathalia", numero: "5522997129938" },
-    "Manicure em Gel": { nome: "Nathalia", numero: "5522997129938" },
-    "Massagista": { nome: "Kelly", numero: "5522992876230" },
-    "Designer Sobrancelhas": { nome: "Karol", numero: "5522998324187" },
-    "Tranças": { nome: "Ana Luiza", numero: "5522997897165" },
-    "Lash Designer": { nome: "Yasmin", numero: "5522997748971" },
-    "Tratamento Capilar": { nome: "Thalita", numero: "5522992773031" }
+    const contatosPorEspecialidade = {
+      "Cabelos": { nome: "Cecília", numero: "5522997024728" },
+      "Cabeleireiro": { nome: "Margareth", numero: "5541999094543" },
+      "Nails Designer": { nome: "Nathalia", numero: "5522997129938" },
+      "Nails Designer em Gel": { nome: "Nathalia", numero: "5522997129938" },
+      "Massagista": { nome: "Kelly", numero: "5522992876230" },
+      "Designer Sobrancelhas": { nome: "Karol", numero: "5522998324187" },
+      "Tranças": { nome: "Ana Luiza", numero: "5522997897165" },
+      "Lash Designer": { nome: "Yasmim", numero: "5522997748971" },
+      "Tratamento Capilar": { nome: "Thalita", numero: "5522992773031" }
   };
 
   function handleBooking(event) {
