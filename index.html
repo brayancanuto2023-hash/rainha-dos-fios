@@ -186,6 +186,7 @@
     <label class="block text-sm font-medium mb-2">Profissional</label>
     <select id="professionalSelect" required class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none transition">
       <option value="">Selecione a profissional...</option>
+      <option value="Cecilia">Cecilia</option>
       <option value="Kelly">Kelly</option>
       <option value="Nathalia">Nathália</option>
       <option value="Ana Luiza">Ana Luiza</option>
@@ -201,8 +202,9 @@
       <label class="block text-sm font-medium mb-2">Especialidade / Área</label>
       <select id="serviceCategory" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-brand-500 outline-none transition">
         <option>Cabelos</option>
-        <option>Manicure & Pedicure</option>
-        <option>Manicure em Gel</option>
+          <option>Cabeleireira</option>
+        <option>Nails Designer</option>
+        <option>Nails Designer com Gel</option>
         <option>Massagista</option>
         <option>Designer Sobrancelhas</option>
         <option>Tranças</option>
@@ -276,7 +278,7 @@
       <div class="bg-[#161616] rounded-xl overflow-hidden border border-neutral-800 text-center p-3 shadow-lg">
         <img src="https://raw.githubusercontent.com/brayancanuto2023-hash/rainha-dos-fios/main/WhatsApp%20Image%202026-10-14%20at%2014.01.15.jpeg" alt="Nathália" class="w-full h-44 sm:h-52 object-cover rounded-lg mb-3">
         <h3 class="text-base sm:text-lg font-bold text-white">Nathália</h3>
-        <p class="text-xs sm:text-sm text-[#D4AF37] font-medium">Manicure e Pedicure em Gel</p>
+        <p class="text-xs sm:text-sm text-[#D4AF37] font-medium">Nails Designer</p>
       </div>
 
       <!-- 3. Ana Luiza -->
@@ -353,14 +355,16 @@
 
         // Simulação de Agendamento
     const contatosPorEspecialidade = {
-    "Cabelos": { nome: "Margareth", numero: "5541999094543" },
+    "Cabelos": { nome: "Cecilia", numero: "5522997024728" },
     "Manicure & Pedicure": { nome: "Nathalia", numero: "5522997129938" },
-    "Manicure em Gel": { nome: "Nathalia", numero: "5522997129938" },
+    "Nails Designer com Gel": { nome: "Nathalia", numero: "5522997129938" },
     "Massagista": { nome: "Kelly", numero: "5522992876230" },
     "Designer Sobrancelhas": { nome: "Karol", numero: "5522998324187" },
     "Tranças": { nome: "Ana Luiza", numero: "5522997897165" },
     "Lash Designer": { nome: "Yasmin", numero: "5522997748971" },
     "Tratamento Capilar": { nome: "Thalita", numero: "5522992773031" }
+    "Cabeleireia": { nome: "Margareth", numero: "5541999094543" }
+        
   };
 
   function handleBooking(event) {
@@ -476,8 +480,9 @@
           <div class="grid grid-cols-2 gap-2">
             <select id="entProfissional" required class="px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white">
               <option value="">Profissional...</option>
-              <option value="Margareth">Margareth (Cabelos)</option>
-              <option value="Nathalia">Nathalia (Manicure)</option>
+              <option value="Cecilia">Cecilia (Cabelos)</option>
+              <option value="Margareth">Margareth (Cabeleireira)</option>
+              <option value="Nathalia">Nathalia (Nalis Designer)</option>
               <option value="Karol">Karol (Sobrancelhas)</option>
               <option value="Ana Luiza">Ana Luiza (Tranças)</option>
               <option value="Yasmin">Yasmin (Lash Designer)</option>
