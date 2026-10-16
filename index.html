@@ -192,7 +192,6 @@
       <option value="Karol">Karol</option>
       <option value="Yasmim">Yasmim</option>
       <option value="Margareth">Margareth</option>
-    <option value="Cecília">Cecília</option>
       <option value="Thalita">Thalita</option>
     </select>
   </div>
@@ -200,17 +199,15 @@
   <div class="grid sm:grid-cols-3 gap-6">
     <div>
       <label class="block text-sm font-medium mb-2">Especialidade / Área</label>
-      <select id="serviceCategory" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-brand-500 outline-none transition-all">
-        <option value="">Selecione a Especialidade / Área...</option>
-        <option value="Cabelos">Cabelos</option>
-        <option value="Cabeleireiro">Cabeleireiro</option>
-        <option value="Nails Designer">Nails Designer</option>
-        <option value="Nails Designer em Gel">Nails Designer em Gel</option>
-        <option value="Massagista">Massagista</option>
-        <option value="Designer Sobrancelhas">Designer Sobrancelhas</option>
-        <option value="Tranças">Tranças</option>
-        <option value="Lash Designer">Lash Designer</option>
-        <option value="Tratamento Capilar">Tratamento Capilar</option>
+      <select id="serviceCategory" class="w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-brand-500 outline-none transition">
+        <option>Cabelos</option>
+        <option>Manicure & Pedicure</option>
+        <option>Manicure em Gel</option>
+        <option>Massagista</option>
+        <option>Designer Sobrancelhas</option>
+        <option>Tranças</option>
+        <option>Lash Designer</option>
+        <option>Tratamento Capilar</option>
       </select>
     </div>
                         <div>
@@ -356,79 +353,48 @@
 
         // Simulação de Agendamento
     const contatosPorEspecialidade = {
-    const contatosPorEspecialidade = {
-      "Cabelos": { nome: "Cecília", numero: "5522997024728" },
-      "Cabeleireiro": { nome: "Margareth", numero: "5541999094543" },
-      "Nails Designer": { nome: "Nathalia", numero: "5522997129938" },
-      "Nails Designer em Gel": { nome: "Nathalia", numero: "5522997129938" },
-      "Massagista": { nome: "Kelly", numero: "5522992876230" },
-      "Designer Sobrancelhas": { nome: "Karol", numero: "5522998324187" },
-      "Tranças": { nome: "Ana Luiza", numero: "5522997897165" },
-      "Lash Designer": { nome: "Yasmim", numero: "5522997748971" },
-      "Tratamento Capilar": { nome: "Thalita", numero: "5522992773031" }
+    "Cabelos": { nome: "Margareth", numero: "5541999094543" },
+    "Manicure & Pedicure": { nome: "Nathalia", numero: "5522997129938" },
+    "Manicure em Gel": { nome: "Nathalia", numero: "5522997129938" },
+    "Massagista": { nome: "Kelly", numero: "5522992876230" },
+    "Designer Sobrancelhas": { nome: "Karol", numero: "5522998324187" },
+    "Tranças": { nome: "Ana Luiza", numero: "5522997897165" },
+    "Lash Designer": { nome: "Yasmin", numero: "5522997748971" },
+    "Tratamento Capilar": { nome: "Thalita", numero: "5522992773031" }
   };
-function handleBooking(event) {
-      if (event) event.preventDefault();
-      
-      const nomeInput = document.getElementById('clientName');
-      const telefoneInput = document.getElementById('clientPhone');
-      const servicoInput = document.getElementById('serviceCategory');
-      const dataInput = document.getElementById('bookingDate');
-      const horarioInput = document.getElementById('bookingTime');
 
-      if (!nomeInput || !telefoneInput || !servicoInput || !dataInput || !horarioInput) {
-        alert('Erro de configuração: Um ou mais campos do formulário não foram encontrados.');
-        return false;
-      }
+  function handleBooking(event) {
+    event.preventDefault();
 
-      const nome = nomeInput.value;
-      const telefone = telefoneInput.value;
-      const servico = servicoInput.value;
-      const data = dataInput.value;
-      const horario = horarioInput.value;
+    const nome = document.getElementById('clientName').value;
+    const telefone = document.getElementById('clientPhone').value;
+    const servico = document.getElementById('serviceCategory').value;
+    const data = document.getElementById('bookingDate').value;
+    const horario = document.getElementById('bookingTime').value;
 
-      const profissionalInfo = contatosPorEspecialidade[servico];
+    const profissionalInfo = contatosPorEspecialidade[servico];
 
-      if (!servico || !profissionalInfo) {
-        alert('Por favor, selecione uma especialidade válida.');
-        return false;
-      }
-
-      const dataFormatada = data ? data.split('-').reverse().join('/') : '';
-      const nomeProfissional = profissionalInfo.nome;
-      const numeroProfissional = profissionalInfo.numero;
-
-      // Mensagem para a profissional
-      const mensagemProfissional = `*Olá, ${nomeProfissional}!*%0A` +
-                                   `👤 *Cliente:* ${nome}%0A` +
-                                   `📱 *Telefone:* ${telefone}%0A` +
-                                   `✨ *Serviço:* ${servico}%0A` +
-                                   `📅 *Data:* ${dataFormatada}%0A` +
-                                   `⏰ *Horário:* ${horario}%0A` +
-                                   `Pode confirmar a disponibilidade deste horário?`;
-
-      // Número da Gerente Geral (Cecília)
-      const numeroGerente = "5522997024728";
-      const mensagemGerente = `🔔 *NOVO AGENDAMENTO NO SALÃO*%0A%0A` +
-                              `👤 *Cliente:* ${nome}%0A` +
-                              `📱 *Telefone:* ${telefone}%0A` +
-                              `✨ *Serviço:* ${servico}%0A` +
-                              `👩‍🦰 *Profissional:* ${nomeProfissional}%0A` +
-                              `📅 *Data:* ${dataFormatada}%0A` +
-                              `⏰ *Horário:* ${horario}`;
-
-      // Redireciona para o WhatsApp da profissional
-      const urlProfissional = `https://api.whatsapp.com/send?phone=${numeroProfissional}&text=${mensagemProfissional}`;
-      window.open(urlProfissional, '_blank');
-
-      // Notifica a gerente após 800ms
-      setTimeout(() => {
-        const urlGerente = `https://api.whatsapp.com/send?phone=${numeroGerente}&text=${mensagemGerente}`;
-        window.open(urlGerente, '_blank');
-      }, 800);
-
-      return false;
+    if (!profissionalInfo) {
+      alert('Por favor, selecione uma especialidade válida.');
+      return;
     }
+
+    const numeroWhatsApp = profissionalInfo.numero;
+    const nomeProfissional = profissionalInfo.nome;
+
+    const dataFormatada = data ? data.split('-').reverse().join('/') : '';
+
+    const mensagem = `Olá, ${nomeProfissional}! Gostaria de agendar um horário de *${servico}* pelo site *RAINHA DOS FIOS*:%0A%0A` +
+      `👤 *Cliente:* ${nome}%0A` +
+      `📱 *Telefone:* ${telefone}%0A` +
+      `💇‍♀️ *Serviço:* ${servico}%0A` +
+      `📅 *Data:* ${dataFormatada}%0A` +
+      `⏰ *Horário:* ${horario}%0A%0A` +
+      `Pode confirmar a disponibilidade deste horário?`;
+
+    const url = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensagem}`;
+    window.open(url, '_blank');
+  }
     </script>
             <!-- Botão Discreto no Rodapé para Acesso à Gerência -->
 <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-200 dark:border-slate-800">
