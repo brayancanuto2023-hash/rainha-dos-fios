@@ -417,19 +417,18 @@ function handleBooking(event) {
                               `📅 *Data:* ${dataFormatada}%0A` +
                               `⏰ *Horário:* ${horario}`;
 
-      // Redireciona para a profissional
+      // Redireciona para o WhatsApp da profissional
       const urlProfissional = `https://api.whatsapp.com/send?phone=${numeroProfissional}&text=${mensagemProfissional}`;
       window.open(urlProfissional, '_blank');
 
-      // Notifica a gerente
+      // Notifica a gerente após 800ms
       setTimeout(() => {
         const urlGerente = `https://api.whatsapp.com/send?phone=${numeroGerente}&text=${mensagemGerente}`;
         window.open(urlGerente, '_blank');
-      }, 1000);
+      }, 800);
 
       return false;
     }
-  }
     </script>
             <!-- Botão Discreto no Rodapé para Acesso à Gerência -->
 <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-200 dark:border-slate-800">
