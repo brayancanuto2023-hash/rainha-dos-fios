@@ -390,16 +390,10 @@
     const url = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${mensagem}`;
     window.open(url, '_blank');
 setTimeout(() => {
-        const msgGerente = `*🚨 NOVO AGENDAMENTO NO SALÃO 🚨*\n\n` +
-            `👤 *Cliente:* ${nome}\n` +
-            `📱 *Telefone:* ${telefone}\n` +
-            `💆‍♀️ *Serviço:* ${servico}\n` +
-            `👩‍🎨 *Profissional:* ${nomeProfissional}\n` +
-            `📅 *Data:* ${dataFormatada}\n` +
-            `⏰ *Horário:* ${horario}`;
-
-        window.location.href = `https://api.whatsapp.com/send?phone=5522997024728&text=${encodeURIComponent(msgGerente)}`;
-    }, 1000);
+    const msgGerente = `*🚨 NOVO AGENDAMENTO NO SALÃO 🚨*\n\n👤 *Cliente:* ${nome}\n📱 *Telefone:* ${telefone}\n💆‍♀️ *Serviço:* ${servico}\n👩‍🎨 *Profissional:* ${nomeProfissional}\n📅 *Data:* ${dataFormatada}\n⏰ *Horário:* ${horario}`;
+    window.location.href = `https://api.whatsapp.com/send?phone=5522997024728&text=${encodeURIComponent(msgGerente)}`;
+}, 1000);
+  }
     </script>
             <!-- Botão Discreto no Rodapé para Acesso à Gerência -->
 <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-200 dark:border-slate-800">
